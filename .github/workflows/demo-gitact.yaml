@@ -1,0 +1,16 @@
+name: Demo Workflow
+
+on: push
+
+jobs:
+    first_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name : Hello 55
+          run: echo "my 1st job"
+
+        - name : list files
+          run: ls
+
+        - name : read command
+          run: cat README.md
