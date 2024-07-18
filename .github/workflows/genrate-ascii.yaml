@@ -16,7 +16,7 @@ jobs:
           run: cowsay -f dragon "Hello World" >> sample.txt
 
         - name: Check file is present or not
-          run: grep -i "dragon" sample.txt
+          run: grep -i "Hello" sample.txt
 
         - name: Read File
           run: cat sample.txt  
