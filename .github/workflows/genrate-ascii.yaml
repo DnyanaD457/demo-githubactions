@@ -13,9 +13,9 @@ jobs:
           run: ls -ltra
 
         - name: Executing Shell Script
-          run: 
+          run: |
             chmod +x script.sh
-            DnyanaD457/demo-githubactions/.github/workflows/script.sh
+            ./script.sh
           
 
         
