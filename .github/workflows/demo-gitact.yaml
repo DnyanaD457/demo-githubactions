@@ -9,11 +9,13 @@ jobs:
         - name: Checkout Repo 
           uses: actions/checkout@v4
 
-        - name : Hello 55
-          run: echo "my 1st job"
+        - name : Least and Read Files
+          run: 
+            echo "my 1st job"
+            ls -ltr
+            cat README.md 
 
-        - name : list files
-          run: ls
+        - name: Genrate an ASCII Artwork
+          run: cowsay -f dragon "Hello World" >> sample.txt
 
-        - name : read command
-          run: cat README.md
+    
