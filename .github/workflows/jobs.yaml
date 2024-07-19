@@ -1,0 +1,38 @@
+name: Jobs
+
+on: push
+
+jobs:
+    build_job:
+        runs-on: ubuntu-latest
+        steps: 
+        - name: Checkout Repo 
+          uses: actions/checkout@v4
+
+        - name: Genrate an ASCII Artwork with build job 
+          run: |
+            sudo apt-get install cowsay -y
+            cowsay -f dragon "Hello World" >> sample.txt
+            sleep 30
+        
+            
+    test_job:
+        runs-on: ubuntu-latest
+        steps: 
+        - name: testing an ASCII Artwork with test job
+          run: |
+            sleep 10
+            grep -i "Hello" sample.txt
+
+    
+    deploy_job:
+        runs-on: ubuntu-latest
+        steps: 
+        - name: deploying an ASCII Artwork with test job
+          run: |
+            cat sample.txt 
+            echo Deploying... .. .        
+
+        
+
+    

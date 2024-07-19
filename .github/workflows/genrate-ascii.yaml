@@ -14,9 +14,11 @@ jobs:
 
         - name: Executing Shell Script
           run: |
-            cd /workspaces/demo-githubactions/.github/workflows
-            pwd
-            ./ascii-script.sh
+            sudo apt-get install cowsay -y
+            cowsay -f dragon "Hello World" >> sample.txt
+            grep -i "Hello" sample.txt
+            cat sample.txt 
+            ls -ltra
 
           
 

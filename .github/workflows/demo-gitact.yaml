@@ -10,12 +10,12 @@ jobs:
           uses: actions/checkout@v4
 
         - name : Least and Read Files
-          run: 
+          run: |
             echo "my 1st job"
             ls -ltr
             cat README.md 
 
-        - name: Genrate an ASCII Artwork
-          run: cowsay -f dragon "Hello World" >> sample.txt
+        # - name: Genrate an ASCII Artwork
+        #   run: cowsay -f dragon "Hello World" >> sample.txt
 
     
