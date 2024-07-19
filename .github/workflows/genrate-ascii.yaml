@@ -13,9 +13,7 @@ jobs:
           run: ls -ltra
 
         - name: Executing Shell Script
-          run: |
-            chmod +x script.sh
-            .github/workflows/script.sh
+          run: /workspaces/demo-githubactions/.github/workflows
           
 
         
