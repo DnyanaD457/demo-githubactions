@@ -13,26 +13,43 @@ jobs:
           run: |
             sudo apt-get install cowsay -y
             cowsay -f dragon "Hello World" >> sample.txt
-            sleep 30
+
+        - name : upload sample.txt file 
+          uses: actions/upload-artifact@v4
+          with:
+           name: my-artifact-file
+           path: sample.txt
         
             
     test_job:
+        needs: build_job
         runs-on: ubuntu-latest
         steps: 
         - name: testing an ASCII Artwork with test job
           run: |
             sleep 10
             grep -i "Hello" sample.txt
+           
+        - name : download sample.txt file 
+          uses: actions/download-artifact@v4
+          with:
+             name: my-artifact-file
+               
 
     
     deploy_job:
+        needs: [test_job]
         runs-on: ubuntu-latest
         steps: 
+        - name : download sample.txt file 
+          uses: actions/download-artifact@v4
+          with:
+            name: my-artifact-file
+
         - name: deploying an ASCII Artwork with test job
           run: |
             cat sample.txt 
             echo Deploying... .. .        
-
         
 
     
