@@ -15,7 +15,7 @@ jobs:
         - name: Executing Shell Script
           run: |
             chmod +x script.sh
-            /workspaces/demo-githubactions/.github/workflows/script.sh
+            .github/workflows/script.sh
           
 
         
