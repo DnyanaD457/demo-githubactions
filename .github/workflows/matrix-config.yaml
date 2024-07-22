@@ -9,7 +9,7 @@ jobs:
         - name: Echo docker details, Run Image
           run: |
             docker info
-            docker run hello-word
+            docker run hello-world
 
     deploy-on-windows:
         runs-on: windows-latest
@@ -17,4 +17,4 @@ jobs:
         - name: Echo docker details, Run Image
           run: |
             docker info
-            docker run hello-word
+            docker run hello-world
