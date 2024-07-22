@@ -1,7 +1,7 @@
 name: Matrix Config
 
 on: 
-  push:
+  #push:
   workflow_dispatch:    
 
 jobs:
