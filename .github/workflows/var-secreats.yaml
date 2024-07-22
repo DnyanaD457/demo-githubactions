@@ -1,31 +1,52 @@
-name: Context testing
-on: push
+name: Context Testing
+
+on: 
+  push:
 
 jobs:
   dump_contexts_to_log:
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: echo "${{ toJson(github) }}"
+
       - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
+        run: echo "${{ toJson(job) }}"
+
       - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
+        run: echo "${{ toJson(steps) }}"
+
       - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
+        run: echo "${{ toJson(runner) }}"
+
       - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
+        run: echo "${{ toJson(strategy) }}"
+
       - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+        run: echo "${{ toJson(matrix) }}"
+
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      CONTAINER_REGISTRY: docker.io
+      IMAGE_NAME: github-actions-nginx
+    steps:
+      - name: Docker Build, Login, Publish
+        run: |
+          docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest .
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ env.CONTAINER_REGISTRY }} --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push ${{ env.CONTAINER_REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: docker
+    concurrency: 
+      group: prod-deployment
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Run
+        timeout-minutes: 10
+        run: |
+          docker run -d -p 8080:80 ${{ env.CONTAINER_REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+          sleep 600
